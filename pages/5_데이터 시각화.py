@@ -21,7 +21,7 @@ MENU_MARKERS = {"아메리카노": "o", "카페라떼": "s", "레몬에이드": 
 CLASS_COLORS = {"1반": PINK, "2반": BLUE, "3반": AMBER}
 CLASS_MARKERS = {"1반": "o", "2반": "s", "3반": "^"}
 
-FIG_SIZE = (6.4, 4.4)
+FIG_SIZE = (5.2, 4.2)
 # seaborn 스타일이 한글 폰트를 덮어쓰지 않도록 폰트를 함께 지정
 SNS_STYLE = {"grid.color": GRID, "axes.edgecolor": "#C9C4DA", "font.family": "NanumGothic"}
 
@@ -116,7 +116,7 @@ def cafe_plotly(df):
     fig.update_traces(line_width=2, marker=dict(size=8, line=dict(width=1.5, color="white")),
                       hovertemplate="%{x}월 · %{y:,}잔")
     fig.update_xaxes(tickvals=list(range(1, 13)), ticktext=[f"{m}월" for m in range(1, 13)],
-                     showgrid=False, linecolor="#C9C4DA")
+                     showgrid=False, linecolor="#C9C4DA", tickangle=0, tickfont_size=10)
     fig.update_yaxes(gridcolor=GRID, zeroline=False)
     fig.update_layout(hovermode="x unified")
     return style_plotly(fig)
@@ -184,12 +184,13 @@ def study_plotly(df):
 
 def style_plotly(fig):
     fig.update_layout(
-        height=440,
+        height=400,
         template="plotly_white",
         font=dict(family="Noto Sans KR, sans-serif", color=MUTED, size=12),
         title=dict(font=dict(size=18, color=INK), x=0.02),
-        legend=dict(title_font_color=INK),
-        margin=dict(l=10, r=10, t=60, b=10),
+        legend=dict(title_font_color=INK, orientation="h", yanchor="top", y=-0.2,
+                    xanchor="center", x=0.5),
+        margin=dict(l=10, r=10, t=50, b=10),
         paper_bgcolor="white",
         plot_bgcolor="white",
     )
@@ -205,6 +206,7 @@ st.markdown(
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 
 html, body, [class*="st-"], .stMarkdown { font-family: 'Noto Sans KR', sans-serif; }
+[data-testid="stIconMaterial"], [data-testid^="stExpanderIcon"] { font-family: 'Material Symbols Rounded' !important; }
 .stApp {
   background:
     radial-gradient(circle at 8% 6%, #FFD6E8 0, transparent 28%),
