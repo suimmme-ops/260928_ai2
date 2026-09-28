@@ -1,6 +1,7 @@
 import inspect
+from pathlib import Path
 
-import koreanize_matplotlib  # noqa: F401  matplotlib 한글 폰트(NanumGothic) 자동 설정
+import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -9,6 +10,12 @@ import seaborn as sns
 import streamlit as st
 
 st.set_page_config(page_title="시각화 라이브러리 비교", page_icon="🎨", layout="wide")
+
+# matplotlib 한글 폰트: 프로젝트에 포함된 NanumGothic을 등록 (서버에 한글 폰트가 없어도 동작)
+for font_file in (Path(__file__).parent.parent / "fonts").glob("*.ttf"):
+    fm.fontManager.addfont(str(font_file))
+plt.rcParams["font.family"] = "NanumGothic"
+plt.rcParams["axes.unicode_minus"] = False
 
 # -----------------------------------------------------------------------------
 # 색상 팔레트 (계열 색상은 항목에 고정 — 순서대로 배정)
